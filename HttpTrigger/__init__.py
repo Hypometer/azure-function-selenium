@@ -15,6 +15,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
 
+    # Something to check with fonts?
+
     driver = webdriver.Chrome("/usr/local/bin/chromedriver", chrome_options=chrome_options)
 
     try:
