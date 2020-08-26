@@ -17,21 +17,22 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     driver = webdriver.Chrome("/usr/local/bin/chromedriver", chrome_options=chrome_options)
     driver.get('http://www.ubuntu.com/')
-    links = driver.find_elements_by_tag_name("a")
-    link_list = ""
-    for link in links:
-        if link_list == "":
-            link_list = link.text
-        else:
-            link_list = link_list + ", " + link.text
+    # links = driver.find_elements_by_tag_name("a")
+    # link_list = ""
+    # for link in links:
+    #     if link_list == "":
+    #         link_list = link.text
+    #     else:
+    #         link_list = link_list + ", " + link.text
+    screenshot = driver.get_screenshot_as_png()
 
     # create blob service client and container client
     credential = DefaultAzureCredential()
     storage_account_url = "https://" + os.environ["par_storage_account_name"] + ".blob.core.windows.net"
     client = BlobServiceClient(account_url=storage_account_url, credential=credential)
-    blob_name = "test" + str(datetime.now()) + ".txt"
+    blob_name = "test.png"
     blob_client = client.get_blob_client(container=os.environ["par_storage_container_name"], blob=blob_name)
-    blob_client.upload_blob(link_list)
+    blob_client.upload_blob(screenshot)
 
     return func.HttpResponse(
              str(link_list),
