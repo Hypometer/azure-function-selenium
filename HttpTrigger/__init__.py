@@ -18,6 +18,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     driver = webdriver.Chrome("/usr/local/bin/chromedriver", chrome_options=chrome_options)
 
     url = req.params.get('url')
+    width = req.params.get('size').split("-")[0]
+    height = req.params.get('size').split("-")[1]
 
     driver.get(url)
     # links = driver.find_elements_by_tag_name("a")
@@ -27,6 +29,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #         link_list = link.text
     #     else:
     #         link_list = link_list + ", " + link.text
+    driver.set_window_size(width,height)
     screenshot = driver.get_screenshot_as_png()
 
     # create blob service client and container client
