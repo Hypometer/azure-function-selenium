@@ -36,7 +36,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         credential = DefaultAzureCredential()
         storage_account_url = "https://" + os.environ["par_storage_account_name"] + ".blob.core.windows.net"
         client = BlobServiceClient(account_url=storage_account_url, credential=credential)
-        blob_name = url.split('azurewebsites.net/')[1].replace("/","-")+".png"
+        blob_name = url.split('azurewebsites.net/')[1].replace("/","-")+"-"+str(datetime.now())+".png"
         blob_client = client.get_blob_client(container=os.environ["par_storage_container_name"], blob=blob_name)
         blob_client.upload_blob(screenshot)
 
