@@ -5,7 +5,7 @@ from selenium import webdriver
 from azure.identity import DefaultAzureCredential, ClientSecretCredential
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime
-import os
+import os, time
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request. 11:38')
@@ -32,6 +32,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         #     else:
         #         link_list = link_list + ", " + link.text
         driver.set_window_size(width,height)
+        time.sleep(5)
         screenshot = driver.get_screenshot_as_png()
 
         # create blob service client and container client
