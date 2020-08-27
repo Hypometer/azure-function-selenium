@@ -24,13 +24,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         width = int(req.params.get('size').split("-")[0])
         height = int(req.params.get('size').split("-")[1])
         urlextra = ""
-        if req.params.get('sports') is not None:
+        if 'sports' in req.params and req.params.get('sports') is not None:
             sports = req.params.get('sports')
             urlextra += '&sports='+sports
-        if req.params.get('date') is not None:
+        if 'date' in req.params and req.params.get('date') is not None:
             date = req.params.get('date')
             urlextra += '&date='+date
-        if req.params.get('books') is not None:
+        if 'books' in req.params and req.params.get('books') is not None:
             date = req.params.get('books')
             urlextra += '&books='+books
 
@@ -52,6 +52,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 str(blob_name),
                 status_code=200
         )
-    except:
+    except Exception as e: 
+        logging.error(e)
         logging.info('Something went very very wrong')
         raise
