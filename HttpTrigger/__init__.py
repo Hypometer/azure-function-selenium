@@ -37,7 +37,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         newurl = url + urlextra
 
-        logging.info('trying url', url+newurl)
+        logging.info('trying url', newurl)
         driver.get(newurl)
         driver.set_window_size(width,height)
         time.sleep(5)
