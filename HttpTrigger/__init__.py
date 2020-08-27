@@ -5,6 +5,7 @@ from selenium import webdriver
 from azure.identity import DefaultAzureCredential, ClientSecretCredential
 from azure.storage.blob import BlobServiceClient
 from datetime import datetime
+import traceback
 import os, time
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -24,18 +25,20 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         width = int(req.params.get('size').split("-")[0])
         height = int(req.params.get('size').split("-")[1])
         urlextra = ""
-        if 'sports' in req.params and req.params.get('sports') is not None:
+        if req.params.get('sports') is not None:
             sports = req.params.get('sports')
             urlextra += '&sports='+sports
-        if 'date' in req.params and req.params.get('date') is not None:
+        if req.params.get('date') is not None:
             date = req.params.get('date')
             urlextra += '&date='+date
-        if 'books' in req.params and req.params.get('books') is not None:
+        if req.params.get('books') is not None:
             date = req.params.get('books')
             urlextra += '&books='+books
 
-        logging.info('trying url', url+urlextra)
-        driver.get(url+urlextra)
+        newurl = url + urlextra
+
+        logging.info('trying url', url+newurl)
+        driver.get(newurl)
         driver.set_window_size(width,height)
         time.sleep(5)
         screenshot = driver.get_screenshot_as_png()
@@ -54,5 +57,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         )
     except Exception as e: 
         logging.error(e)
+        track = traceback.format_exc()
+        logging.error(track)
         logging.info('Something went very very wrong')
         raise
