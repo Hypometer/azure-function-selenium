@@ -34,7 +34,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             date = req.params.get('books')
             urlextra += '&books='+books
 
-        logginginfo('trying url', url+urlextra)
+        logging.info('trying url', url+urlextra)
         driver.get(url+urlextra)
         driver.set_window_size(width,height)
         time.sleep(5)
