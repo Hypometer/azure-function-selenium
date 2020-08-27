@@ -27,13 +27,22 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         urlextra = ""
         if req.params.get('sports') is not None:
             sports = req.params.get('sports')
-            urlextra += '&sports='+sports
+            if urlextra != "":
+                urlextra += '&sports='+sports
+            else:
+                urlextra += '?sports='+sports
         if req.params.get('date') is not None:
             date = req.params.get('date')
-            urlextra += '&date='+date
+            if urlextra != "":
+                urlextra += '&date='+date
+            else:
+                urlextra += '?date='+date
         if req.params.get('books') is not None:
             date = req.params.get('books')
-            urlextra += '&books='+books
+            if urlextra != "":
+                urlextra += '&books='+books
+            else:
+                urlextra += '?books='+books
 
         newurl = url + urlextra
 
