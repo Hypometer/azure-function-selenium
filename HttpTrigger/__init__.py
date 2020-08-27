@@ -23,14 +23,19 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         url = req.params.get('url')
         width = int(req.params.get('size').split("-")[0])
         height = int(req.params.get('size').split("-")[1])
-        driver.get(url)
-        # links = driver.find_elements_by_tag_name("a")
-        # link_list = ""
-        # for link in links:
-        #     if link_list == "":
-        #         link_list = link.text
-        #     else:
-        #         link_list = link_list + ", " + link.text
+        urlextra = ""
+        if req.params.get('sports') is not None:
+            sports = req.params.get('sports')
+            urlextra += '&sports='+sports
+        if req.params.get('date') is not None:
+            date = req.params.get('date')
+            urlextra += '&date='+date
+        if req.params.get('books') is not None:
+            date = req.params.get('books')
+            urlextra += '&books='+books
+
+        logginginfo('trying url', url+urlextra)
+        driver.get(url+urlextra)
         driver.set_window_size(width,height)
         time.sleep(5)
         screenshot = driver.get_screenshot_as_png()
