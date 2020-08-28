@@ -38,7 +38,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             else:
                 urlextra += '?date='+date
         if req.params.get('books') is not None:
-            date = req.params.get('books')
+            books = req.params.get('books')
             if urlextra != "":
                 urlextra += '&books='+books
             else:
